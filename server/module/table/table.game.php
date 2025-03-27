@@ -576,7 +576,38 @@ class APP_GameAction extends  APP_Action {
     protected $view;
     protected $viewArgs;
     function getArg($name, $type, $mandatory = true, $default = null) {
-        return '';
+        switch ($type) {
+            case AT_int:
+            case AT_posint:
+            case AT_float:
+            case AT_num:
+                return 0;
+            case AT_json:
+            case AT_numberlist:
+                return array();
+            case AT_bool:
+                return false;
+            case AT_enum:
+            case AT_alphanum:
+            case AT_username:
+            case AT_login:
+            case AT_cityname:
+            case AT_filename:
+            case AT_groupname:
+            case AT_timezone:
+            case AT_mediawikipage:
+            case AT_html_id:
+            case AT_alphanum_dash:
+            case AT_date:
+            case AT_alpha_strict:
+            case AT_namewithaccent:
+            case AT_base64:
+            case AT_version:
+            case AT_uuid:
+                return '';
+            default:
+                throw new Exception("Unknown argument type: $type");
+        }
     }
     protected function setAjaxMode($bCheckCsrf = true) {
     }
