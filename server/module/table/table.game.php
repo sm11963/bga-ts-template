@@ -83,6 +83,7 @@ class APP_DbObject extends APP_Object {
     }
 
     static function escapeStringForDB($string) {
+        return "";
     }
 }
 
