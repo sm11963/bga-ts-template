@@ -2,7 +2,7 @@
 
 if (!defined('APP_GAMEMODULE_PATH')) {
     define('APP_GAMEMODULE_PATH', '');
-	define('APP_BASE_PATH', '');
+    define('APP_BASE_PATH', '');
 }
 
 /**
@@ -44,6 +44,7 @@ class APP_DbObject extends APP_Object {
 
     static function DbQuery($str) {
         echo "dbquery: $str\n";
+        return new mysqli_result(mysql: new mysqli());
     }
 
     static function getUniqueValueFromDB($sql) {
@@ -109,7 +110,7 @@ class GameState {
 
     function state() {
         if (array_key_exists($this->current_state, $this->states)) {
-            $state =  $this->states[$this->current_state];
+            $state = $this->states[$this->current_state];
             $state['id'] = $this->current_state;
             return $state;
         }
@@ -191,7 +192,7 @@ class GameState {
 
 
     function getPrivateState($playerId) {
-        return  $this->private_states[$playerId] ?? null;
+        return $this->private_states[$playerId] ?? null;
     }
 
     function nextPrivateStateForPlayers($ids, $transition) {
@@ -296,6 +297,20 @@ abstract class Table extends APP_GameClass {
         return [];
     }
 
+    /**
+     * Get an associative array with generic data about players (ie: not game specific data).
+     * The key of the associative array is the player id. The returned table is cached, so ok to call multiple times without performance concerns.
+     * 
+     * The content of each value is:
+     * - player_name - the name of the player
+     * - player_color (ex: ff0000) - the color code of the player (as string)
+     * - player_no - the position of the player at the start of the game in natural table order, i.e. 1,2,3
+     *
+     * 
+     * @link https://en.doc.boardgamearena.com/Main_game_logic:_Game.php
+     * 
+     * @return array<string, array{player_id: int, player_color: string, player_eliminated: int, player_name: string, player_no: int, player_zombie: int}>
+     */
     function loadPlayersBasicInfos() {
         $default_colors = array("ff0000", "008000", "0000ff", "ffa500", "4c1b5b");
         $values = array();
@@ -572,7 +587,7 @@ define('AT_base64', 33);         // Base64 string
 
 define("FEX_bad_input_argument", 300);
 
-class APP_GameAction extends  APP_Action {
+class APP_GameAction extends APP_Action {
     protected $game;
     protected $view;
     protected $viewArgs;
