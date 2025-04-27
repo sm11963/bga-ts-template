@@ -48,39 +48,41 @@ class APP_DbObject extends APP_Object {
     }
 
     static function getUniqueValueFromDB($sql) {
-        return 0;
+        return [];
     }
 
     static function getCollectionFromDB($query, $single = false) {
         echo "dbquery coll: $query\n";
-        return array();
+        return [];
     }
 
     function getNonEmptyCollectionFromDB($sql) {
-        return array();
+        return [];
     }
 
     function getObjectFromDB($sql) {
-        return array();
+        return [];
     }
 
     function getNonEmptyObjectFromDB($sql) {
-        return array();
+        return [];
     }
 
     static function getObjectListFromDB($query, $single = false) {
         echo "dbquery list: $query\n";
-        return array();
+        return [];
     }
 
     function getDoubleKeyCollectionFromDB($sql, $bSingleValue = false) {
-        return array();
+        return [];
     }
 
     static function DbGetLastId() {
+        return 0;
     }
 
     static function DbAffectedRow() {
+        return 0;
     }
 
     static function escapeStringForDB($string) {
